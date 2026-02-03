@@ -1,0 +1,19 @@
+.nav-container {
+  width: 100%;
+}
+.nav-ul {
+  padding: 5px;
+  margin: 0;
+  background-color: skyblue;
+}
+
+.nav-ul li {
+  display: inline-block;
+  padding: 10px;
+}
+
+.nav-ul li a {
+  color: #fff;
+  padding: 5px;
+  text-decoration: none;
+}
