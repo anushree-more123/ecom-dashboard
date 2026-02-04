@@ -3,6 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import "./signup.css";
 
+interface FormData {
+  name: string;
+  email: string;
+  password: string;
+}
+
 interface Errors {
   name: string;
   email: string;
@@ -10,11 +16,11 @@ interface Errors {
 }
 
 const SignUp: React.FC = () => {
-  const [name, setName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-
-  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [formData, setFormData] = useState<FormData>({
+    name: "",
+    email: "",
+    password: "",
+  });
 
   const [errors, setErrors] = useState<Errors>({
     name: "",
@@ -22,12 +28,26 @@ const SignUp: React.FC = () => {
     password: "",
   });
 
-  // Clear individual field error
-  const clearError = (field: keyof Errors) => {
-    setErrors((prev) => ({
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState("");
+
+  const { name, email, password } = formData;
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
       ...prev,
-      [field]: "",
+      [name]: value,
     }));
+
+    if (errors[name as keyof Errors]) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+    }
   };
 
   const validate = (): boolean => {
@@ -59,15 +79,43 @@ const SignUp: React.FC = () => {
     return valid;
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setApiError("");
+
     if (!validate()) return;
 
-    console.log({
-      name,
-      email,
-      password,
-    });
+    try {
+      setLoading(true);
+
+      const response = await fetch("http://localhost:5000/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Registration failed");
+      }
+
+      alert("Registered successfully 🎉");
+      console.log("Signup Success:", data);
+
+      // reset form
+      setFormData({
+        name: "",
+        email: "",
+        password: "",
+      });
+    } catch (error: any) {
+      setApiError(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -75,29 +123,27 @@ const SignUp: React.FC = () => {
       <form className="signup-card" onSubmit={handleSubmit}>
         <h1>Register</h1>
 
+        {apiError && <p className="error-text">{apiError}</p>}
+
         {/* Name */}
         <input
           type="text"
+          name="name"
           placeholder="Full Name"
           value={name}
           className={errors.name ? "input-error" : ""}
-          onChange={(e) => {
-            setName(e.target.value);
-            if (errors.name) clearError("name");
-          }}
+          onChange={handleChange}
         />
         {errors.name && <p className="error-text">{errors.name}</p>}
 
         {/* Email */}
         <input
           type="email"
+          name="email"
           placeholder="Email Address"
           value={email}
           className={errors.email ? "input-error" : ""}
-          onChange={(e) => {
-            setEmail(e.target.value);
-            if (errors.email) clearError("email");
-          }}
+          onChange={handleChange}
         />
         {errors.email && <p className="error-text">{errors.email}</p>}
 
@@ -105,13 +151,11 @@ const SignUp: React.FC = () => {
         <div className="password-wrapper">
           <input
             type={showPassword ? "text" : "password"}
+            name="password"
             placeholder="Password"
             value={password}
             className={errors.password ? "input-error" : ""}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              if (errors.password) clearError("password");
-            }}
+            onChange={handleChange}
           />
 
           <span
@@ -124,7 +168,9 @@ const SignUp: React.FC = () => {
 
         {errors.password && <p className="error-text">{errors.password}</p>}
 
-        <button type="submit">Sign Up</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Signing Up..." : "Sign Up"}
+        </button>
       </form>
     </div>
   );
