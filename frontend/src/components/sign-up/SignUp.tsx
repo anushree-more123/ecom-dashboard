@@ -105,7 +105,6 @@ const SignUp: React.FC = () => {
       alert("Registered successfully 🎉");
       console.log("Signup Success:", data);
 
-      // reset form
       setFormData({
         name: "",
         email: "",
