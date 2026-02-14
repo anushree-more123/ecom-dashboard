@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 import "./signup.css";
 
 interface FormData {
@@ -16,6 +17,7 @@ interface Errors {
 }
 
 const SignUp: React.FC = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -99,12 +101,12 @@ const SignUp: React.FC = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Registration failed");
+        throw new Error();
       }
 
-      alert("Registered successfully ");
       console.log("Signup Success:", data);
-
+      localStorage.setItem("user", JSON.stringify(data));
+      navigate("/productList");
       // reset form
       setFormData({
         name: "",
@@ -112,7 +114,7 @@ const SignUp: React.FC = () => {
         password: "",
       });
     } catch (error: any) {
-      setApiError(error.message);
+      setApiError("Registration failed, please try again");
     } finally {
       setLoading(false);
     }

@@ -22,6 +22,6 @@ Backend runs on http://localhost:5000
 
 cd frontend  
 npm install  
-npm start
+npm run dev
 
 Frontend runs on http://localhost:5173

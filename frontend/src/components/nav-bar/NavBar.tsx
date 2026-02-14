@@ -6,7 +6,7 @@ const NavBar = () => {
     <div className="nav-container">
       <ul className="nav-ul">
         <li>
-          <Link to={"/"}>Products</Link>
+          <Link to={"/productList"}>Products</Link>
         </li>
         <li>
           <Link to={"/add"}>Add Products</Link>
@@ -21,7 +21,7 @@ const NavBar = () => {
           <Link to={"/profile"}>Profile</Link>
         </li>
         <li>
-          <Link to={"/signup"}>SignUP</Link>
+          <Link to={"/"}>SignUP</Link>
         </li>
       </ul>
     </div>
