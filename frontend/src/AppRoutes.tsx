@@ -5,6 +5,7 @@ import AppIndex from "./AppIndex";
 import SignUp from "./components/sign-up/SignUp";
 import Products from "./components/product-list/Products";
 import NotFound from "./components/not-found/NotFound";
+import Login from "./components/login/Login";
 
 const router = createBrowserRouter([
   {
@@ -13,10 +14,10 @@ const router = createBrowserRouter([
     // errorElement: <ErrorBoundary />,
     children: [
       // Public Routes
-      // {
-      //   path: routes.LOGIN,
-      //   element: <Login />,
-      // },
+      {
+        path: routes.LOGIN,
+        element: <Login />,
+      },
       {
         path: routes.SIGNUP,
         element: <SignUp />,

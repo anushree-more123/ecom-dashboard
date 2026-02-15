@@ -2,40 +2,36 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
-import "./signup.css";
+import "./login.css";
 import { routes } from "../../routes";
 
 interface FormData {
-  name: string;
   email: string;
   password: string;
 }
 
 interface Errors {
-  name: string;
   email: string;
   password: string;
 }
 
-const SignUp: React.FC = () => {
+const Login: React.FC = () => {
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState<FormData>({
-    name: "",
     email: "",
     password: "",
   });
 
   const [errors, setErrors] = useState<Errors>({
-    name: "",
     email: "",
     password: "",
   });
-
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState("");
 
-  const { name, email, password } = formData;
+  const { email, password } = formData;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -55,12 +51,7 @@ const SignUp: React.FC = () => {
 
   const validate = (): boolean => {
     let valid = true;
-    let newErrors: Errors = { name: "", email: "", password: "" };
-
-    if (!name.trim()) {
-      newErrors.name = "Name is required";
-      valid = false;
-    }
+    let newErrors: Errors = { email: "", password: "" };
 
     if (!email.trim()) {
       newErrors.email = "Email is required";
@@ -72,9 +63,6 @@ const SignUp: React.FC = () => {
 
     if (!password) {
       newErrors.password = "Password is required";
-      valid = false;
-    } else if (password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
       valid = false;
     }
 
@@ -91,12 +79,12 @@ const SignUp: React.FC = () => {
     try {
       setLoading(true);
 
-      const response = await fetch("http://localhost:5000/register", {
+      const response = await fetch("http://localhost:5000/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
@@ -105,41 +93,23 @@ const SignUp: React.FC = () => {
         throw new Error();
       }
 
-      console.log("Signup Success:", data);
+      console.log("Login Success:", data);
       localStorage.setItem("user", JSON.stringify(data));
       navigate(routes.PRODUCTS);
-      // reset form
-      setFormData({
-        name: "",
-        email: "",
-        password: "",
-      });
-    } catch (error: any) {
-      setApiError("Registration failed, please try again");
+    } catch (error) {
+      setApiError("Invalid email or password");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="signup-wrapper">
-      <form className="signup-card" onSubmit={handleSubmit}>
-        <h1>Register</h1>
+    <div className="login-wrapper">
+      <form className="login-card" onSubmit={handleSubmit}>
+        <h1>Login</h1>
 
         {apiError && <p className="api-error-text">{apiError}</p>}
 
-        {/* Name */}
-        <input
-          type="text"
-          name="name"
-          placeholder="Full Name"
-          value={name}
-          className={errors.name ? "input-error" : ""}
-          onChange={handleChange}
-        />
-        {errors.name && <p className="error-text">{errors.name}</p>}
-
-        {/* Email */}
         <input
           type="email"
           name="email"
@@ -150,7 +120,6 @@ const SignUp: React.FC = () => {
         />
         {errors.email && <p className="error-text">{errors.email}</p>}
 
-        {/* Password */}
         <div className="password-wrapper">
           <input
             type={showPassword ? "text" : "password"}
@@ -172,13 +141,13 @@ const SignUp: React.FC = () => {
         {errors.password && <p className="error-text">{errors.password}</p>}
 
         <button type="submit" disabled={loading}>
-          {loading ? "Signing Up..." : "Sign Up"}
+          {loading ? "Logging In..." : "Login"}
         </button>
 
         <p className="redirect-text">
-          Already have an account?{" "}
-          <Link to={routes.LOGIN} className="redirect-link">
-            Log in
+          Don’t have an account?{" "}
+          <Link to={routes.SIGNUP} className="redirect-link">
+            Create account
           </Link>
         </p>
       </form>
@@ -186,4 +155,4 @@ const SignUp: React.FC = () => {
   );
 };
 
-export default SignUp;
+export default Login;
