@@ -51,6 +51,7 @@ const SignUp: React.FC = () => {
         [name]: "",
       }));
     }
+    setApiError("");
   };
 
   const validate = (): boolean => {

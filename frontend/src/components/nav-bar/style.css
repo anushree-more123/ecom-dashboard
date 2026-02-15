@@ -1,19 +1,83 @@
 .nav-container {
   width: 100%;
-}
-.nav-ul {
-  padding: 5px;
-  margin: 0;
   background-color: skyblue;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
 }
 
-.nav-ul li {
-  display: inline-block;
-  padding: 10px;
-}
-
-.nav-ul li a {
-  color: #fff;
-  padding: 5px;
+.nav-left a {
+  margin-right: 20px;
   text-decoration: none;
+  color: white;
+  font-weight: 500;
+}
+
+.nav-left a:hover {
+  text-decoration: underline;
+}
+
+.nav-right {
+  position: relative;
+}
+
+/* Avatar */
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #1d4ed8;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* Logout Modal (dropdown style near avatar) */
+.logout-modal {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 220px;
+  background-color: white;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+}
+
+.logout-modal p {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cancel-btn {
+  background-color: #e5e7eb;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.logout-btn {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background-color: #dc2626;
 }

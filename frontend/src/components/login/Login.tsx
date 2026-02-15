@@ -47,6 +47,7 @@ const Login: React.FC = () => {
         [name]: "",
       }));
     }
+    setApiError("");
   };
 
   const validate = (): boolean => {
@@ -94,8 +95,12 @@ const Login: React.FC = () => {
       }
 
       console.log("Login Success:", data);
-      localStorage.setItem("user", JSON.stringify(data));
-      navigate(routes.PRODUCTS);
+      if (data.hasOwnProperty("name")) {
+        localStorage.setItem("user", JSON.stringify(data));
+        navigate(routes.PRODUCTS);
+      } else {
+        throw new Error();
+      }
     } catch (error) {
       setApiError("Invalid email or password");
     } finally {
