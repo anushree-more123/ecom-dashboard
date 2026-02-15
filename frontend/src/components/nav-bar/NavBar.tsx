@@ -1,27 +1,33 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./style.css";
+import { routes } from "../../routes";
 
 const NavBar = () => {
+  const navigate = useNavigate();
+  const auth = localStorage.getItem("user");
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate(routes.LOGIN);
+  };
   return (
     <div className="nav-container">
       <ul className="nav-ul">
         <li>
-          <Link to={"/productList"}>Products</Link>
+          <Link to={routes.PRODUCTS}>Products</Link>
         </li>
         <li>
-          <Link to={"/add"}>Add Products</Link>
+          <Link to={routes.ADD}>Add Products</Link>
         </li>
         <li>
-          <Link to={"/update"}>Update Products</Link>
+          <Link to={routes.ADD}>Update Products</Link>
         </li>
         <li>
-          <Link to={"/logout"}>Logout</Link>
+          <Link onClick={handleLogout} to={routes.LOGIN}>
+            Logout
+          </Link>
         </li>
         <li>
-          <Link to={"/profile"}>Profile</Link>
-        </li>
-        <li>
-          <Link to={"/"}>SignUP</Link>
+          <Link to={routes.PROFILE}>Profile</Link>
         </li>
       </ul>
     </div>
