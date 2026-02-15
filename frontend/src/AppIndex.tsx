@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate, Outlet, useLocation } from "react-router-dom";
 import { routes } from "./routes";
+import NavBar from "./components/nav-bar/NavBar";
 
 const AppIndex = () => {
   const navigate = useNavigate();
@@ -28,7 +29,18 @@ const AppIndex = () => {
     }
   }, [token, location.pathname, navigate]);
 
-  return <Outlet />;
+  // Check if current page is auth page
+  const isAuthPage =
+    location.pathname === routes.LOGIN || location.pathname === routes.SIGNUP;
+
+  return (
+    <>
+      {/* Show Navbar only when logged in AND not on auth pages */}
+      {token && !isAuthPage && <NavBar />}
+
+      <Outlet />
+    </>
+  );
 };
 
 export default AppIndex;
