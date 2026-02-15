@@ -1,10 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
-import "./style.css";
 import { routes } from "../../routes";
+import "./style.css";
 
 const NavBar = () => {
   const navigate = useNavigate();
-  const auth = localStorage.getItem("user");
   const handleLogout = () => {
     localStorage.clear();
     navigate(routes.LOGIN);
