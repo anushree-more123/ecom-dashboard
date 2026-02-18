@@ -1,0 +1,88 @@
+.product-container {
+  width: 95%;
+  max-width: 1200px;
+  margin: 50px auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #222;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+}
+
+.product-table thead {
+  background: linear-gradient(135deg, #2196f3, #21cbf3);
+}
+
+.product-table th {
+  padding: 16px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.product-table td {
+  padding: 14px;
+  text-align: center;
+  font-size: 14px;
+  color: #444;
+  border-bottom: 1px solid #eee;
+}
+
+.product-table tbody tr:nth-child(even) {
+  background-color: #f9fbfd;
+}
+
+.product-table tbody tr:hover {
+  background-color: #e3f2fd;
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.product-table tbody tr td[colspan] {
+  padding: 20px;
+  font-weight: 500;
+  color: #888;
+}
+
+.message {
+  text-align: center;
+  font-size: 18px;
+  margin-top: 20px;
+  color: #555;
+}
+
+.error {
+  text-align: center;
+  font-size: 18px;
+  margin-top: 20px;
+  color: red;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .product-table th,
+  .product-table td {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .title {
+    font-size: 22px;
+  }
+}

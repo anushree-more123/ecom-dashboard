@@ -129,7 +129,6 @@ const SignUp: React.FC = () => {
 
         {apiError && <p className="api-error-text">{apiError}</p>}
 
-        {/* Name */}
         <input
           type="text"
           name="name"
@@ -140,7 +139,6 @@ const SignUp: React.FC = () => {
         />
         {errors.name && <p className="error-text">{errors.name}</p>}
 
-        {/* Email */}
         <input
           type="email"
           name="email"
@@ -151,7 +149,6 @@ const SignUp: React.FC = () => {
         />
         {errors.email && <p className="error-text">{errors.email}</p>}
 
-        {/* Password */}
         <div className="password-wrapper">
           <input
             type={showPassword ? "text" : "password"}

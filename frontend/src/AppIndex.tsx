@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate, Outlet, useLocation } from "react-router-dom";
 import { routes } from "./routes";
 import NavBar from "./components/nav-bar/NavBar";
+import Footer from "./components/footer/Footer";
 
 const AppIndex = () => {
   const navigate = useNavigate();
@@ -11,7 +12,6 @@ const AppIndex = () => {
 
   useEffect(() => {
     if (token) {
-      // Logged in user trying to access auth pages
       if (
         location.pathname === routes.LOGIN ||
         location.pathname === routes.SIGNUP
@@ -19,7 +19,6 @@ const AppIndex = () => {
         navigate(routes.PRODUCTS, { replace: true });
       }
     } else {
-      // Not logged in trying to access protected routes
       if (
         location.pathname !== routes.LOGIN &&
         location.pathname !== routes.SIGNUP
@@ -29,14 +28,17 @@ const AppIndex = () => {
     }
   }, [token, location.pathname, navigate]);
 
-  // Check if current page is auth page
   const isAuthPage =
     location.pathname === routes.LOGIN || location.pathname === routes.SIGNUP;
 
   return (
     <>
-      {/* Show Navbar only when logged in AND not on auth pages */}
-      {token && !isAuthPage && <NavBar />}
+      {token && !isAuthPage && (
+        <>
+          <NavBar />
+          <Footer />
+        </>
+      )}
 
       <Outlet />
     </>

@@ -16,17 +16,14 @@
   z-index: 9999;
 }
 
-/* Success */
 .snackbar-success {
   background-color: #16a34a;
 }
 
-/* Error */
 .snackbar-error {
   background-color: #dc2626;
 }
 
-/* Smooth animation */
 @keyframes fadeInScale {
   from {
     opacity: 0;
