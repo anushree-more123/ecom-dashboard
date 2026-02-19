@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useNavigate, Outlet, useLocation } from "react-router-dom";
-import { routes } from "./routes";
 import NavBar from "./components/nav-bar/NavBar";
 import Footer from "./components/footer/Footer";
+import { routes } from "./routes";
 
 const AppIndex = () => {
   const navigate = useNavigate();
